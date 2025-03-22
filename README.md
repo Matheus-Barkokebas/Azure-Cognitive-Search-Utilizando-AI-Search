@@ -1,50 +1,75 @@
-# Tutorial: Análise de Sentimentos com Language Studio no Azure AI
+# Azure Cognitive Search: Utilizando AI Search para indexação e consulta de Dados
 
-Neste tutorial, irei compartilhar o processo de como utilizei o **Language Studio** da **Azure AI** para analisar sentimentos de frases. A seguir, mostro os passos seguidos para configurar e utilizar a ferramenta, além de exemplos dos resultados obtidos.
+Este guia apresenta um passo a passo para configurar e utilizar o Azure AI Search para mineração de conhecimento e busca de insights em dados.
 
-## Passo 1: Criando um Novo Recurso
+## Recursos Necessários
 
-O primeiro passo é criar um novo recurso no **Language Studio**. Para isso, siga as etapas abaixo:
+Para seguir este tutorial, serão necessários os seguintes recursos no Azure:
 
-1. Clique na engrenagem do **Language Studio**.
-2. Selecione a opção **Recursos**.
-3. Clique em **Criar Novo Recurso**.
+- **Azure AnI Search**: Gerencia idexação e consultas.
+- **Azure AI Services**: Fornece serviços de IA para enriquecer os dados.
+- **Storage Account**: Armazena documentos e dados brutos.
 
-![Passo 1.1 - Criar Recurso](passo1.1.png)
-![Passo 1.2 - Criar Recurso](passo1.2.png)
+> **Importante**: O Azure AI Search e o Azure AI Services devem estar na mesma localização.
 
-## Passo 2: Selecionando "Analisar Sentimentos e Extrair Opiniões"
+## Passos para Configuração
 
-Após criar o recurso, você precisará selecionar a funcionalidade **"Analisar Sentimentos e Extrair Opiniões"**. Siga os passos abaixo:
+### 1. Criar um Recurso Azure AI Search
+1. Acesse o [Portal Azure](https://portal.azure.com/).
+2. Clique em **+ Criar um recurso** e procure por **Azure AI Search**.
+3. Configure com:
+   - Grupo de Recursos: Criar ou selecionar um existente.
+   - Nome do Serviço: Um nome único.
+   - Localização: Escolha uma região disponível.
+   - Camada de Preço: **Básico**.
+4. Clique em **Criar** e aguarde a implantação.
+![Passo 1.1 - Criar Recurso](passo1.png)
 
-1. Clique na opção **"Analisar Sentimentos e Extrair Opiniões"**.
 
-![Passo 2.1 - Selecionar Opção](passo2.1.png)
+### 2. Criar um Recurso Azure AI Services
+1. No portal do Azure, clique em **+ Criar um recurso** e procure por **Azure AI Services**.
+2. Configure com:
+   - Grupo de Recursos: Mesmo do Azure AI Search.
+   - Localização: Mesmo do Azure AI Search.
+   - Nome: Um nome único.
+   - Camada de Preço: **Standard S0**.
+3. Clique em **Criar** e aguarde a implantação.
+![Passo 1.1 - Criar Recurso](passo2.png)
 
+### 3. Criar uma Conta de Armazenamento
+1. No portal do Azure, clique em **+ Criar um recurso** e procure por **Conta de Armazenamento**.
+2. Configure com:
+   - Grupo de Recursos: Mesmo do Azure AI Search e AI Services.
+   - Nome: Um nome único.
+   - Localização: Escolha uma localização disponível.
+   - Redundância: **Locally Redundant Storage (LRS)**.
+3. Clique em **Criar** e aguarde a implantação.
+4. No recurso criado, ative **Allow Blob anonymous access**.
+![Passo 1.1 - Criar Recurso](passo3.png)
 
-## Passo 3: Inserindo Frases para Análise
+### 4. Configurar o storege
 
-Ao clicar na opção, você será redirecionado para uma tela onde poderá inserir as frases que deseja analisar. Na tela, você verá dois campos principais:
+![Passo 1.1 - Criar Recurso](passo4.png)
+![Passo 1.1 - Criar Recurso](passo4.1.png)
 
-- **Idioma**: Selecione o idioma desejado.
-- **Input**: Insira as frases para que a IA analise os sentimentos.
+### 5. Upload de Documentos para o Armazenamento
+1. No recurso de Armazenamento, acesse **Containers** e crie um container chamado `coffee-reviews`.
+2. Baixe os arquivos de exemplo de [neste link](https://aka.ms/mslearn-coffee-reviews).
+3. Faça upload dos arquivos extraídos para o container.
 
-![Passo 3 - Selecionar Opção](passo2.2.png)
-
-### Exemplo de Frases Inseridas
-
-Aqui está um exemplo do que inseri no campo de entrada para análise de sentimentos:
-
-![Exemplo de Frases](exemplos.png)
-
-## Passo 4: Executando a Análise de Sentimentos
-
-Após inserir as frases, role para baixo até encontrar o botão **"Run"** para executar a análise. Clique nele para iniciar o processo.
-
-![Botão Run](passo3.png)
-
-## Passo 5: Resultados da Análise
-
-Após a execução, os resultados da análise de sentimentos serão exibidos. Você verá os sentimentos atribuídos às frases, como **positivo**, **negativo** ou **neutro**.
-
-![Resultados da Análise](exemplo2.png)
+### 6. Indexação dos Documentos
+1. No recurso **Azure AI Search**, clique em **Import Data**.
+2. Selecione **Azure Blob Storage** e preencha:
+   - Nome da Fonte de Dados: `coffee-customer-data`.
+   - Tipo de Extração: **Content and metadata**.
+   - Selecione seu container `coffee-reviews`.
+3. Adicione habilidades de IA:
+   - Selecione seu recurso Azure AI Services.
+   - Habilite **OCR** e **extração de localização, sentimentos e tags**.
+   - Salve em um Knowledge Store.
+4. Configure o indexador:
+   - Nome do índice: `coffee-index`.
+   - Marque campos como **filterable**.
+   - Nome do indexador: `coffee-indexer`.
+   - Agendamento: **Uma vez**.
+5. Submeta e aguarde a indexação.
