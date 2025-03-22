@@ -23,7 +23,7 @@ Para seguir este tutorial, serão necessários os seguintes recursos no Azure:
    - Localização: Escolha uma região disponível.
    - Camada de Preço: **Básico**.
 4. Clique em **Criar** e aguarde a implantação.
-![Passo 1.1 - Criar Recurso](passo1.png)
+![Passo 1.1 - Criar Recurso Azure AI Search](passo1.png)
 
 
 ### 2. Criar um Recurso Azure AI Services
@@ -34,7 +34,7 @@ Para seguir este tutorial, serão necessários os seguintes recursos no Azure:
    - Nome: Um nome único.
    - Camada de Preço: **Standard S0**.
 3. Clique em **Criar** e aguarde a implantação.
-![Passo 1.1 - Criar Recurso](passo2.png)
+![Passo 1.1 - Criar Recurso Azure AI Services](passo2.png)
 
 ### 3. Criar uma Conta de Armazenamento
 1. No portal do Azure, clique em **+ Criar um recurso** e procure por **Conta de Armazenamento**.
@@ -45,12 +45,12 @@ Para seguir este tutorial, serão necessários os seguintes recursos no Azure:
    - Redundância: **Locally Redundant Storage (LRS)**.
 3. Clique em **Criar** e aguarde a implantação.
 4. No recurso criado, ative **Allow Blob anonymous access**.
-![Passo 1.1 - Criar Recurso](passo3.png)
+![Passo 1.1 - Criar Conta de Armazenamento](passo3.png)
 
 ### 4. Configurar o storege
 
-![Passo 1.1 - Criar Recurso](passo4.png)
-![Passo 1.1 - Criar Recurso](passo4.1.png)
+![Passo 1.1 - Criar Configurar o storege](passo4.png)
+![Passo 1.1 - Criar Configurar o storege](passo4.1.png)
 
 ### 5. Upload de Documentos para o Armazenamento
 1. No recurso de Armazenamento, acesse **Containers** e crie um container chamado `coffee-reviews`.
